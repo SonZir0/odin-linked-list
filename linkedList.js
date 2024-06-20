@@ -17,7 +17,7 @@ export default class LinkedList {
             let temp = new Node(value);
             temp.prev = this.tailNode;
             this.tailNode.next = temp;
-            this.tailNode = this.tailNode.next;
+            this.tailNode = temp;
             this.length++;
         }
     }
@@ -94,5 +94,47 @@ export default class LinkedList {
         }
         resultString += 'null';
         return resultString;
+    }
+
+    insertAt(value, index) {
+        /*  if there's attempt to insert at the edges of the list use append/prepend
+            (if list is empty initializes it with initWithNode() function)  */
+        if (index <= 0) return this.prepend(value);
+        if (index >= this.length) return this.append(value);
+
+        let nodeToShift = this.headNode.next;
+        for (let i = 1; i < index && nodeToShift; i++) {
+            nodeToShift = nodeToShift.next;
+        }
+
+        let temp = new Node(value);
+        temp.prev = nodeToShift.prev;
+        nodeToShift.prev.next = temp;
+
+        temp.next = nodeToShift;
+        nodeToShift.prev = temp;
+        this.length++;
+    }
+
+    removeAt(index) {
+        if (index >= this.length - 1 || this.length === 1)
+            return this.pop(); /*  at the very back of the list use pop() */
+
+        if (!this.headNode) return; //  if head is null - do nothing
+        if (index <= 0) {
+            //  remove at the front
+            let temp = this.headNode.next;
+            temp.prev = null;
+            this.headNode = temp;
+        } else {
+            // remove somewhere in the middle of the list
+            let temp = this.headNode.next;
+            for (let i = 1; i < index && temp; i++) {
+                temp = temp.next;
+            }
+            temp.prev.next = temp.next;
+            temp.next.prev = temp.prev;
+        }
+        this.length--;
     }
 }

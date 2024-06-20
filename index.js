@@ -2,13 +2,14 @@ import LinkedList from './linkedList.js';
 
 let test = new LinkedList();
 console.log('\nEmpty list at the start:\n', test.toString());
+
 test.append(10);
 test.append(20);
 console.log('\nList after 2 appends:\n', test.toString());
 
 test.prepend(5);
 test.prepend(-10);
-console.log('\nList after 2 prepends"\n', test.toString());
+console.log('\nList after 2 prepends\n', test.toString());
 
 console.log(`\nList size: ${test.size()}`);
 console.log(`\nHead: \n`, test.head());
@@ -26,4 +27,17 @@ console.log(
 );
 console.log(`Index of value ${searchValue}: `, test.find(searchValue));
 
-console.log(test.toString());
+let addToIndex = 1;
+let valueToInsert = 7;
+test.insertAt(valueToInsert, addToIndex);
+console.log(
+    `\nList after inserting value ${valueToInsert} at index ${addToIndex}: `,
+    test.toString()
+);
+
+let removeAtIndex = 2;
+test.removeAt(removeAtIndex);
+console.log(
+    `\nList after removing at index ${removeAtIndex}: `,
+    test.toString()
+);
